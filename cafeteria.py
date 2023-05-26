@@ -21,7 +21,7 @@ menu_today = "td:nth-child({})".format(weekday_number + 2)
 m_1470 = open("./out/student/m_student_today.json", 'w')
 
 m_1470.write('{"version": "2.0","template": {"outputs": [{"simpleText": {"text": "')
-m_1470.write("[대림식 알림]\\n")
+m_1470.write("[대구대 알림]\\n")
 m_1470.write("\\n")
 m_1470.write("{}년 {}월 {}일 {}\\n".format(today.year, today.month, today.day, days[weekday_number]))
 m_1470.write("학생식당 메뉴입니다.\\n")
@@ -50,7 +50,7 @@ else:
 
     for i in range(0, 5):
         globals()["m_1470_{}".format(file_weekday[i])].write('{"version": "2.0","template": {"outputs": [{"simpleText": {"text": "')
-        globals()["m_1470_{}".format(file_weekday[i])].write("[대림식 알림]\\n")
+        globals()["m_1470_{}".format(file_weekday[i])].write("[대구대 알림]\\n")
         globals()["m_1470_{}".format(file_weekday[i])].write("\\n")
         globals()["m_1470_{}".format(file_weekday[i])].write("{} 주간 중\\n{} 학생식당 메뉴입니다.\\n".format(soup.select_one('#current_date').get_text(), days[i]))
         globals()["m_1470_{}".format(file_weekday[i])].write("\\n")
@@ -129,7 +129,7 @@ m_1470.close()
 m_1480 = open("./out/profstaff/m_profstaff_today.json", 'w')
 
 m_1480.write('{"version": "2.0","template": {"outputs": [{"simpleText": {"text": "')
-m_1480.write("[대림식 알림]\\n")
+m_1480.write("[대 알림]\\n")
 m_1480.write("\\n")
 m_1480.write("{}년 {}월 {}일 {}\\n".format(today.year, today.month, today.day, days[weekday_number]))
 m_1480.write("교직원식당 메뉴입니다.\\n")
