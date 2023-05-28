@@ -12,6 +12,7 @@ headers = {
     "Accept-Charset": "application/x-www-form-urlencoded; charset=UTF-8",
 }
 
+#당일 메뉴
 def today_menu(place):
 
     if place == "복지관":
@@ -21,6 +22,7 @@ def today_menu(place):
         num = 3
         title = "웅지관1F 한식뷔페 오늘의 식단"
 
+    #요일 구분
     today = date.today()
     weekday_number = today.weekday()  # 월요일 0 일요일 6
 
@@ -32,6 +34,7 @@ def today_menu(place):
     #date1 = time.strftime('%Y-%m-%d', time.localtime(time.time()))
 
 
+    #대구대 서버에 학식 데이터 요청
     response = {
         'restaurant_seq': num,
         'menu_date': date1
@@ -45,7 +48,8 @@ def today_menu(place):
     temp = res[weekday_number-1]
     #print(temp)
     temp = temp['menu_content']
-    
+
+    #데이터 전처리
     hangul = re.compile('[^ ㄱ-ㅣ가-힣+]+') # 한글과 띄어쓰기를 제외한 모든 글자
     result = hangul.sub('', temp) # 한글과 띄어쓰기를 제외한 모든 부분을 제거
     result = result.split()
@@ -65,6 +69,7 @@ def today_menu(place):
 
     return response
 
+#일주일 메뉴
 def week_menu(place):
 
     if place == "복지관":
@@ -119,13 +124,14 @@ def week_menu(place):
         #print(response)
     return response
 
+#메인함수
 def cafeteria_parser(content):
     place = content['action']['detailParams']['place_cafeteria']["value"]
     place = ''.join(str(e) for e in place)
     place = place.replace(" ", "")
     print(place)
 
-    if (content['action']['detailParams']['sys_date']) == None:
+    if (content['action']['detailParams'].get('sys_date')) == None:
         response  = today_menu(place)
     else:
         date = content['action']['detailParams']['sys_date']["value"]
@@ -138,8 +144,3 @@ def cafeteria_parser(content):
             response  = today_menu(place)
             print(response)
     return response 
-
-#content = {'bot': {'id': '646c530b4b9f7d07f1ca18bc!', 'name': 'DU_chatbot'}, 'intent': {'id': '64734812318d31192baf5dbc', 'name': '학식', 'extra': {'reason': {'code': 1, 'message': 'OK'}}}, 'action': {'id': '6473494a6ce345751ec2939a', 'name': '학식메뉴', 'params': {'place_cafeteria': '복지관'}, 'detailParams': {'place_cafeteria': {'groupName': '', 'origin': '복지관', 'value': '복지관'}}, 'clientExtra': {}}, 'userRequest': {'block': {'id': '64734812318d31192baf5dbc', 'name': '학식'}, 'user': {'id': '3aea02e1baec45006253bf44be9a72232d6c1a0b93badd2ce1448159c732e10aed', 'type': 'botUserKey', 'properties': {'botUserKey': '3aea02e1baec45006253bf44be9a72232d6c1a0b93badd2ce1448159c732e10aed', 'bot_user_key': '3aea02e1baec45006253bf44be9a72232d6c1a0b93badd2ce1448159c732e10aed'}}, 'utterance': '복지관', 'params': {'ignoreMe': 'true', 'surface': 'BuilderBotTest'}, 'lang': 'ko', 'timezone': 'Asia/Seoul'}, 'contexts': []}
-
-#cafeteria_parser(content)
-
