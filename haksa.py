@@ -40,9 +40,6 @@ def haksa_parser():
     description = schedule
     description = '\n'.join(str(e) for e in description)
     response = insert_card(title,description)
-    response = insert_button_text(response,"전체일정","학사 전체일정")
-    reply = make_reply('다음달 학사일정', '다음달 학사일정')
-    response = insert_replies(response, reply)
     print(response)
     return response
 
