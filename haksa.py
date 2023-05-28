@@ -5,6 +5,7 @@ from method import *
 
 def haksa_parser(content):
 
+    # 사용자 입력데이터 전처리
     if any(content['action']['detailParams']) == False:
         date = int(time.strftime('%m', time.localtime(time.time())))
 
@@ -15,7 +16,7 @@ def haksa_parser(content):
         #print(content)
 
 
-
+    #대구대 학사일정 파싱
     url = "https://daegu.ac.kr/schedule/detail?schedule_info_seq=1"
     response = requests.get(url)
     response.raise_for_status()
@@ -25,6 +26,7 @@ def haksa_parser(content):
     i = 2
     schedule = []
 
+    #필요한 데이터 구분 및 리스트 저장
     for text in text:
         if i % 2 == 0:
             text = text.get_text()
@@ -44,7 +46,7 @@ def haksa_parser(content):
             #print(i)
 
         i += 1
-    
+        
     if date == 13:
         title = "올해 학사일정"
     else:
