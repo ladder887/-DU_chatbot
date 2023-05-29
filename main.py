@@ -6,12 +6,9 @@ from method import *
 from haksa_schedule import *
 from haksa_notification import *
 
-#from bokgjigwan import *
-#from ungjigwan import *
-#from test import *
-
 app = Flask(__name__)
 
+#복지관 및 웅지관 메뉴
 @app.route("/cafeteria", methods=['POST'])
 def cafeteria():
     content = request.get_json()
@@ -19,41 +16,25 @@ def cafeteria():
     response = cafeteria_parser(content)
     return jsonify(response)
 
+#기능 모음/ 버튼
 @app.route("/button", methods=['POST'])
 def button():
     response = buttons()
     return jsonify(response)
 
+#학사일정
 @app.route("/haksa/schedule", methods=['POST'])
 def haksa_schedule():
     content = request.get_json()
     response = schedule_parser(content)
     return jsonify(response)
 
+#학사공지
 @app.route("/haksa/notification", methods=['POST'])
 def haksa_notification():
     content = request.get_json()
     response = notification_parser(content)
     return jsonify(response)
-
-
-""" # 사용안함
-@app.route("/bogjigwan", methods=['POST'])
-def bokgjigwan():
-    response = bokgjigwan_menu()
-    return jsonify(response)
-
-@app.route("/ungjigwan", methods=['POST'])
-def ungjigwan():
-    response = ungjigwan_menu()
-    return jsonify(response)
-
-@app.route("/test", methods=['POST'])
-def test():
-    content = request.get_json() #사용자가 보낸 메세지 입력
-    response = test(content)
-    return jsonify(response)
-"""
 
 
 if __name__ == "__main__":
