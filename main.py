@@ -3,7 +3,7 @@ import sys
 from cafeteria import *
 from button import *
 from method import * 
-from haksa import *
+from haksa_schedule import *
 
 app = Flask(__name__)
 
@@ -19,8 +19,8 @@ def button():
     response = buttons()
     return jsonify(response)
 
-@app.route("/haksa", methods=['POST'])
-def haksa():
+@app.route("/haksa/schedule", methods=['POST'])
+def haksa_schedule():
     content = request.get_json()
     response = haksa_parser(content)
     return jsonify(response)
