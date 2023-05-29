@@ -8,9 +8,9 @@ headers = {
     "Accept-Language": "ko",
     "Accept-Charset": "application/x-www-form-urlencoded; charset=UTF-8",
 }
-
+# 월간 일정
 def month_parser(date):
-    #대구대 학사일정 파싱
+    # 대구대 학사일정 파싱
     url = "https://daegu.ac.kr/schedule/detail?schedule_info_seq=1"
     data = requests.get(url, headers=headers)
     data.raise_for_status()
@@ -21,13 +21,12 @@ def month_parser(date):
     count = 2
     schedule = []
 
-    #필요한 데이터 구분 및 리스트 저장
+    # 필요한 데이터 구분 및 리스트 저장
     for text in temp:
         if count % 2 == 0:
             text = text.get_text()
             num1 = text.strip()
             month = int(num1[0:2])
-            #print(month)
         else:
             text = text.get_text()
             text = text.strip()
@@ -35,14 +34,12 @@ def month_parser(date):
 
             if date == month or date == 13:
                 schedule.append(num1 + " : " + num2)
-                #print(schedule)
             elif date < month:
                 break;
-            #print(i)
 
         count += 1
         
-    #입력에 맞게 반환
+    # 전송 데이터 형식 설정 및 저장
     title = '-{}월 학사일정-'.format(date)
     schedule = '\n'.join(str(e) for e in schedule)
     if schedule == '':
@@ -53,17 +50,18 @@ def month_parser(date):
         reply = make_reply('{}월'.format(j), '{}월 학사일정'.format(j) )
         response = insert_replies(response, reply)
 
-    #print(response)
     return response
 
+# 해당 년도
 def all_parser(date):
-    #대구대 학사일정 파싱
+    # 대구대 학사일정 파싱
     url = "https://daegu.ac.kr/schedule/detail?schedule_info_seq=1"
     data = requests.get(url, headers=headers)
     data.raise_for_status()
 
     soup = BeautifulSoup(data.text, "lxml")
     temp = soup.find_all(attrs={'class':'left'})
+
     count = 2
 
     response = {'version': '2.0', 'template': {
@@ -78,7 +76,6 @@ def all_parser(date):
                 text = text.get_text()
                 num1 = text.strip()
                 month = int(num1[0:2])
-                #print(month)
             else:
                 text = text.get_text()
                 text = text.strip()
@@ -86,12 +83,11 @@ def all_parser(date):
 
                 if i == month:
                     schedule.append(num1 + " : " + num2)
-                    #print(schedule)
                 elif date < month:
                     break;
-                #print(i)
             count += 1
 
+        # 전송 데이터 형식 설정 및 저장
         schedule = '\n'.join(str(e) for e in schedule)
         if schedule == '':
             schedule = '학사일정이 없습니다'
@@ -99,27 +95,29 @@ def all_parser(date):
     for j in range(1, 13):
         reply = make_reply('{}월'.format(j), '{}월 학사일정'.format(j) )
         response = insert_replies(response, reply)
-        #print(response)
     return response
 
+# 사용자 입력데이터에 따른 호출
 def schedule_parser(content):
-    # 사용자 입력데이터 전처리
+    # 날짜 데이터가 없을경우 이번달 일정 출력
     if (content['action']['detailParams'].get('sys_date')) == None:
         date = int(time.strftime('%m', time.localtime(time.time())))
         response = month_parser(date)
+
+    # 날짜 데이터가 있을경우
     else:
         content = content['action']['detailParams']['sys_date']["value"]
         content = ''.join(str(e) for e in content)
         content = content.replace(" ", "")
-        #print(content)
-
+        # 해당년도 일정 출력
         if content == u"올해":
             date = 13
             response = all_parser(date)
-
+        # 입력한 달 일정 출력
         elif u'월' in content:
             date = int(content.replace("월", ""))
             response = month_parser(date)
+        # 해당하는날짜 데이터가 아닐경우 이번달 일정 출력
         else:
             date = int(time.strftime('%m', time.localtime(time.time())))
             response = month_parser(date)
