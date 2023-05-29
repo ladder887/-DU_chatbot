@@ -11,6 +11,5 @@ def buttons():
     response = insert_card(title,description)
     response = insert_button_text(response, "이번달 학사일정", "학사일정")
     response = insert_button_text(response, "최근 학사공지", "학사공지")
-    response = insert_button_text(response,"복지관 교직원 식당","복지관")
-    response = insert_button_text(response, "웅지관 한식뷔페", "웅지관")
+    response = insert_button_text(response,"복지관 및 웅지관 식단표","학식메뉴")
     return response
