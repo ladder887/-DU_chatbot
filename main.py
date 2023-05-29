@@ -4,6 +4,7 @@ from cafeteria import *
 from button import *
 from method import * 
 from haksa_schedule import *
+from haksa_notification import *
 
 #from bokgjigwan import *
 #from ungjigwan import *
@@ -26,9 +27,14 @@ def button():
 @app.route("/haksa/schedule", methods=['POST'])
 def haksa_schedule():
     content = request.get_json()
-    response = haksa_parser(content)
+    response = schedule_parser(content)
     return jsonify(response)
 
+@app.route("/haksa/notification", methods=['POST'])
+def haksa_notification():
+    content = request.get_json()
+    response = notification_parser(content)
+    return jsonify(response)
 
 
 """ # 사용안함
