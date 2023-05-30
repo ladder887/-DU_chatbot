@@ -16,7 +16,7 @@
   - 카카오톡 통합검색으로 "대구대 알려드림"을 검색합니다.
 ![20230530_222659_1](https://github.com/ladder887/DU_chatbot/assets/129020663/dec263f2-e64b-46bc-818e-a370cfa14e13)
   - 텍스트를 입력하여 메뉴를 확인할 수 있습니다.(텍스트는 자유롭게 입력)
-![20230530_222830_1](https://github.com/ladder887/DU_chatbot/assets/129020663/e13b88a1-c8f9-490a-881a-31fad21a16f7)
+![20230530_222830_1](https://github.com/ladder887/DU_chatbot/assets/129020663/e13b88a1-c8f9-490a-881a-31fad21a16f7)<>
     ### 이후 원하는 서비스를 눌러 사용가능합니다.
 
 
